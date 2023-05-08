@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import os, telebot, time
-from brownie import accounts, web3, Contract, chain, ZERO_ADDRESS
+from brownie import accounts, web3, Contract, chain, ZERO_ADDRESS, interface
 from web3._utils.events import construct_event_topic_set
 from datetime import datetime, date
 from dotenv import load_dotenv
@@ -64,7 +64,7 @@ def main():
         time.sleep(sleep_time)
 
 def search(start_block):
-    c = Contract('0xE95A203B1a91a908F9B9CE46459d101078c2c3cb')
+    c = interface.IProxy('0xE95A203B1a91a908F9B9CE46459d101078c2c3cb')
     contract = web3.eth.contract(c.address, abi=c.abi)
     
     topics = construct_event_topic_set(
