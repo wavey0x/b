@@ -26,6 +26,7 @@ telegram_bot_key = os.environ.get('WAVEY_ALERTS_BOT_KEY')
 etherscan_base_url = f'https://etherscan.io/'
 bot = telebot.TeleBot(telegram_bot_key)
 env = os.environ.get("ENV")
+sleep_time = int(os.environ.get("SLEEP_TIME"))
 
 EXPLORER = {
     1: "etherscan",
@@ -47,12 +48,19 @@ IMPLEMENTATION_SLOT = '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca5
 SCORE_THRESHOLD = 10_000
 
 def main():
-    sleep_time = 500
-    start_block = 17201973
+    start_block = 17_211_973
+    with open("local_data.json", "r") as jsonFile:
+        data = json.load(jsonFile)
+        start_block = data['last_block']
+    
     finish_block = 0
     while True:
         finish_block = search(max(start_block, finish_block))
         print(f'Reached chain head {finish_block}. Sleeping for {sleep_time} seconds...')
+        data = {}
+        data['last_block'] = finish_block
+        with open("local_data.json", 'w') as fp:
+            json.dump(data, fp, indent=2)
         time.sleep(sleep_time)
 
 def search(start_block):
