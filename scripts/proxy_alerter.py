@@ -1,5 +1,4 @@
 import requests
-import pandas as pd
 import os, telebot, time
 from brownie import accounts, web3, Contract, chain, ZERO_ADDRESS, interface
 from web3._utils.events import construct_event_topic_set
@@ -115,7 +114,7 @@ def search(start_block):
         msg += f'\n\n🔗[View on DIFF on UpgradeHub]({url})'
         print(msg)
         chat_id = CHAT_IDS["PROXY_WATCHER"] if env == "PROD" else CHAT_IDS["WAVEY_ALERTS"]
-        bot.send_message(chat_id, msg, parse_mode="markdown", disable_web_page_preview = True)
+        bot.send_message(chat_id, msg, parse_mode="markdown", disable_web_page_preview = True, timeout=60)
         time.sleep(5)
 
     return chain.height
