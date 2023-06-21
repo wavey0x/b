@@ -2,7 +2,7 @@ import requests
 import time, datetime
 from datetime import datetime
 import pandas as pd
-from brownie import web3, ZERO_ADDRESS, Contract, chain
+from brownie import web3, ZERO_ADDRESS, Contract, chain, interface
 
 WEEK = 60 * 60 * 24 * 7
 
@@ -10,14 +10,15 @@ def main():
     voter = web3.ens.resolve('curve-voter.ychad.eth')
     # url = 'https://snapshot-mirror.prod.stake.capital/bribes?name=stake-dao'
     url = 'https://vm.crvusd.fi/bribes?name=stake-dao'
+    # url = 'https://vm.crvusd.fi/bribes?name=hiddehand'
     data = requests.get(url).json()
     for d in data:
-        if d['label'] == 'Curve':
+        if d['label'] == 'Balancer':
             data = d
             break
 
     bribes = data['bribes']
-    bribe_contract = Contract(data['bribeContract'])
+    bribe_contract = interface.IBribeContract(data['bribeContract'])
     gauge_controller = Contract(data['gaugeController'])
     current_time = int(time.time())
     current_period = bribe_contract.getCurrentPeriod()

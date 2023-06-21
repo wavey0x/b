@@ -100,7 +100,8 @@ def search(start_block):
         event_date = datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         name = ''
         try:
-            name = Contract(proxy).name()
+            abi = [{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}]
+            name = Contract.from_abi('',proxy, abi, persist=False).name()
         except:
             pass
         

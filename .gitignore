@@ -6,3 +6,10 @@ build/
 reports/
 env
 local_data.json
+sign.py
+scratch.py
+scripts/token_holdings.py
+token_holdings.py
+data
+cache
+xcache
