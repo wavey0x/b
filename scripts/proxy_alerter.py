@@ -112,7 +112,7 @@ def search(start_block):
         msg += f'\nImpl: [{implementation}](https://etherscan.io/address/{implementation})'
         msg += f'\nUpgraded at: {event_date}  '
         msg += f'[View txn](https://etherscan.io/tx/{txn_hash})'
-        msg += f'\n\n🔗[View on DIFF on UpgradeHub]({url})'
+        msg += f'\n\n🔗[View DIFF on UpgradeHub]({url})'
         print(msg)
         chat_id = CHAT_IDS["PROXY_WATCHER"] if env == "PROD" else CHAT_IDS["WAVEY_ALERTS"]
         bot.send_message(chat_id, msg, parse_mode="markdown", disable_web_page_preview = True, timeout=60)

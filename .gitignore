@@ -13,3 +13,5 @@ token_holdings.py
 data
 cache
 xcache
+.DS_Store
+scripts/misc
